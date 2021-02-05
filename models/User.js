@@ -1,4 +1,5 @@
 const knex = require('../database/connection');
+const bcrypt = require('bcrypt');
 class User{
 	async list(){
 		try {
@@ -11,34 +12,24 @@ class User{
 		}
 	}
 	async insert(name,email,password){
-		function create_UUID(st_password){
-			var dt = new Date().getTime();
-			var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-				var r = (dt + Math.random()*16)%16 | 0;
-				dt = Math.floor(dt/16);
-				return (c=='x' ? r :(r&0x3|0x8)).toString(16);
-			});
-			st_password = uuid;
-			return st_password;
-		}
+		
 		try{
-		let hash = await create_UUID(password);
-		let result = await knex.insert({name, email, password: hash}).table('account');
-		return result = {
-			"name": name,
-			"email": email,
-			"password": password
-		};
+			let hash = await bcrypt.hash(password, 10);
+			let result = await knex.insert({name, email, password: hash}).table('account');
+			return result = {
+				"name": name,
+				"email": email,
+				"password": password
+			};
 		}catch(o_error){
 			console.log(o_error);
 		}
 	}
 	async view(email){
 		try{
-			let result = await knex.select(["name","email","password"]).where({email:email}).table("account");
-			if(result.length > 0){
-				return result[0];
-			}
+			let result = await knex.select(["name","email","password"]).where({email:email}).table("account").first();
+				if(result)
+					return result;
 		}catch(o_error){
 			console.table(o_error);
 			return undefined;

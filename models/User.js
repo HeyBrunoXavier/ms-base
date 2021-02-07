@@ -1,37 +1,50 @@
 const knex = require('../database/connection');
-const bcrypt = require('bcrypt');
 class User{
 	async list(){
 		try {
-			var result = await knex.select("*").from("account");
-			if(result.length > 0)
-			return result;
+			var o_response = await knex.select("*").from("users");
+			if(o_response.length > 0){
+				delete o_response[0].password;
+				return o_response;
+			}
 		}catch (erro) {
 			console.log(erro);
 			return false;
 		}
 	}
-	async insert(name,email,password){
-		
+	async insert(user){
 		try{
-			let hash = await bcrypt.hash(password, 10);
-			let result = await knex.insert({name, email, password: hash}).table('account');
-			return result = {
-				"name": name,
-				"email": email,
-				"password": password
-			};
-		}catch(o_error){
-			console.log(o_error);
+			let o_response = await knex('users').insert(user)
+			return o_response = {
+				"name": user.name,
+				"email": user.email,
+			}
+		}catch(error){
+			console.error(error);
+			return error
 		}
 	}
-	async view(email){
+	async findByID(id){
 		try{
-			let result = await knex.select(["name","email","password"]).where({email:email}).table("account").first();
-				if(result)
-					return result;
-		}catch(o_error){
-			console.table(o_error);
+			let o_response = await knex("users").where({id:id}).first();
+				if(o_response){
+					delete o_response.password;
+					return o_response;
+				}
+		}catch(error){
+			console.error(error);
+			return undefined;
+		}
+	}
+	async findByEmail(email){
+		try{
+			let o_response = await knex("users").where({email:email}).first();
+				if(o_response){
+					delete o_response.password;
+					return o_response;
+				}
+		}catch(error){
+			console.error(error);
 			return undefined;
 		}
 	}

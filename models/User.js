@@ -40,7 +40,6 @@ class User{
 		try{
 			let o_response = await knex("users").where({email:email}).first();
 				if(o_response){
-					delete o_response.password;
 					return o_response;
 				}
 		}catch(error){

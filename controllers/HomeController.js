@@ -1,7 +1,6 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 class HomeController{
- 
 	async list(req, res){
 		let o_user = await User.list();
 		return res.json(o_user).status(200).end();
@@ -36,7 +35,7 @@ class HomeController{
 			return res.status(404).json({err: "Usuário não existente!"}).end();
 		return res.json(o_user).status(200).end();
 	}
-	
+
 	async findByEmail(req,res){
 		let st_email = req.params.email;
 		if(!st_email)

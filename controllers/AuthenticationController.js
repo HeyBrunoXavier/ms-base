@@ -19,7 +19,7 @@ class authentication {
 					"email": user.email
 				}
 				let token = jwt.sign(o_user, process.env.SECRET, {expiresIn:3600})
-				res.set('X-TOKEN', token);
+        res.set('X-TOKEN', token);
 				return res.status(204).end();
 			}
 			return res.status(404).end('Invalid Email or Password');

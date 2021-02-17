@@ -5,12 +5,6 @@ var listEndpointsExpress = require("list-endpoints-express");
 var router = require("./routes/routes")
 const Table = require('cli-table');
 require('dotenv').config()
-
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
-// parse application/json
-app.use(bodyParser.json())
-
 const table = new Table({
 	chars: { 'top': '═' , 'top-mid': '╤' , 'top-left': '╔' , 'top-right': '╗'
 				 , 'bottom': '═' , 'bottom-mid': '╧' , 'bottom-left': '╚' , 'bottom-right': '╝'
@@ -18,8 +12,13 @@ const table = new Table({
 				 , 'right': '║' , 'right-mid': '╢' , 'middle': '│' },
 	style: { 'padding-left': 2, 'padding-right': 2}
 });
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+// parse application/json
+app.use(bodyParser.json())
+app.use(router);
 app.listen(process.env.PORT,() => {
-		table.push(
+  table.push(
 			["Service", `PORT: ${process.env.PORT}`,"Running"],
       ["Methods", "Paths","ON"],
 			[listEndpointsExpress(router)[0].method, listEndpointsExpress(router)[0].paths[0],true],

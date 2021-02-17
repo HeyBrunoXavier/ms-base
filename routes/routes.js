@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const auth = require("../utils/Passport")();
 
-const Authentication = require("../controllers/Authentication");
+const Authentication = require("../controllers/AuthenticationController");
 const RoleController = require("../controllers/RolesController");
 const HomeController = require("../controllers/HomeController");
 const Root = require("../controllers/Root");

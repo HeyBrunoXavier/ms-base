@@ -23,12 +23,14 @@ app.listen(process.env.PORT,() => {
       ["Methods", "Paths","ON"],
 			[listEndpointsExpress(router)[0].method, listEndpointsExpress(router)[0].paths[0],true],
 			[listEndpointsExpress(router)[2].method, listEndpointsExpress(router)[2].paths[0],true],
-			[listEndpointsExpress(router)[1].method, listEndpointsExpress(router)[1].paths[1],true],
-			[listEndpointsExpress(router)[0].method, listEndpointsExpress(router)[0].paths[2],true],
-			[listEndpointsExpress(router)[0].method, listEndpointsExpress(router)[0].paths[3],true],
-			[listEndpointsExpress(router)[0].method, listEndpointsExpress(router)[0].paths[4],true],
-			[listEndpointsExpress(router)[0].method, listEndpointsExpress(router)[0].paths[1],true],
-			[listEndpointsExpress(router)[1].method, listEndpointsExpress(router)[1].paths[0],true],
+      [listEndpointsExpress(router)[0].method, listEndpointsExpress(router)[0].paths[1],true],
+      [listEndpointsExpress(router)[1].method, listEndpointsExpress(router)[0].paths[1],true],
+      [listEndpointsExpress(router)[0].method, listEndpointsExpress(router)[0].paths[3],true],
+      [listEndpointsExpress(router)[1].method, listEndpointsExpress(router)[1].paths[2],true],
+      [listEndpointsExpress(router)[0].method, listEndpointsExpress(router)[0].paths[4],true],
+      [listEndpointsExpress(router)[0].method, listEndpointsExpress(router)[0].paths[5],true],
+      [listEndpointsExpress(router)[0].method, listEndpointsExpress(router)[0].paths[2],true],
+      [listEndpointsExpress(router)[1].method, listEndpointsExpress(router)[1].paths[1],true],
 		);
 	console.log(table.toString());
 });

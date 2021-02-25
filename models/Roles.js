@@ -16,9 +16,9 @@ class Roles{
 			let o_response = await knex('roles').insert(role)
 			return o_response = {
 				"role": role.id,
-        "description": role.description,
+				"description": role.description,
 				"action": role.action,
-        "user": role.user_id
+				"user": role.user_id
 			}
 		}catch(error){
 			console.error(error);

@@ -46,10 +46,10 @@ class UserController{
    * @param {*} response
    */
 	async findById(request,response){
-		let st_id = request.params.id;
-		if(!st_id)
+		let id = request.params.id;
+		if(!id)
 			return response.status(400).end();
-		let o_user = await User.findByID(st_id);
+		let o_user = await User.findByID(id);
 		if(!o_user)
 			return response.status(404).json({err: "Usuário não existente!"}).end();
 		return response.json(o_user).status(200).end();
@@ -62,10 +62,10 @@ class UserController{
    * @param {*} response
    */
 	async findByEmail(request,response){
-		let st_email = request.params.email;
-		if(!st_email)
+		let email = request.params.email;
+		if(!email)
 			return response.status(400).end();
-		let o_user = await User.findByEmail(st_email);
+		let o_user = await User.findByEmail(email);
 		if(!o_user)
 			return response.status(404).json({err: "Usuário não existente!"}).end();
 		return response.json(o_user).status(200).end();

@@ -4,6 +4,7 @@ const app = express()
 var listEndpointsExpress = require("list-endpoints-express");
 var router = require("./routes/routes")
 const Table = require('cli-table');
+const PORT = process.env.PORT || 5000;
 require('dotenv').config()
 const table = new Table({
 	chars: { 'top': '═' , 'top-mid': '╤' , 'top-left': '╔' , 'top-right': '╗'
@@ -17,12 +18,13 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 app.use(router);
-app.listen(process.env.PORT,() => {
+app.listen(PORT,() => {
   table.push(
-			["Service", `PORT: ${process.env.PORT}`,"Running"],
+			["Service", `PORT: ${PORT}`,"Running"],
       ["Methods", "Paths","ON"],
 			[listEndpointsExpress(router)[0].method, listEndpointsExpress(router)[0].paths[0],true],
 			[listEndpointsExpress(router)[2].method, listEndpointsExpress(router)[2].paths[0],true],
+      [listEndpointsExpress(router)[1].method, listEndpointsExpress(router)[1].paths[2],true],
       [listEndpointsExpress(router)[0].method, listEndpointsExpress(router)[0].paths[1],true],
       [listEndpointsExpress(router)[1].method, listEndpointsExpress(router)[0].paths[1],true],
       [listEndpointsExpress(router)[0].method, listEndpointsExpress(router)[0].paths[3],true],

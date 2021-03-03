@@ -20,18 +20,11 @@ class UserController{
 	async insert(request,response){
 		try{
 			let user = request.body;
-			if(!user.name)
-				return response.status(400);
-			if(!user.email)
-				return response.status(400);
-			if(!user.password)
-				return response.status(400);
+			if(!user) return response.status(403).send("Bad request!");
 			user.password = bcrypt.hashSync(user.password,10);
 			let o_user = await User.insert(user);
-			if(o_user.constraint == 'users_email_unique')
-				return response.status(406).end('Registered User');
-			if(o_user.constraint == 'users_people_foreign')
-				return response.status(406).end('People ID not found');
+			if(o_user.constraint == 'users_email_unique') return response.status(406).end('Registered User');
+			if(o_user.constraint == 'users_people_foreign') return response.status(406).end('People ID not found');
 			return response.json(o_user).status(200).end();
 		}
 		catch(error){
@@ -47,11 +40,9 @@ class UserController{
    */
 	async findById(request,response){
 		let id = request.params.id;
-		if(!id)
-			return response.status(400).end();
+		if(!id) return response.status(403).send("Id does not exist!");
 		let o_user = await User.findByID(id);
-		if(!o_user)
-			return response.status(404).json({err: "Usuário não existente!"}).end();
+		if(!o_user) return response.status(404).json({err: "User does not exis!"}).end();
 		return response.json(o_user).status(200).end();
 	}
 
@@ -63,11 +54,9 @@ class UserController{
    */
 	async findByEmail(request,response){
 		let email = request.params.email;
-		if(!email)
-			return response.status(400).end();
+		if(!email) return response.status(400).send("Email does not exist!");
 		let o_user = await User.findByEmail(email);
-		if(!o_user)
-			return response.status(404).json({err: "Usuário não existente!"}).end();
+		if(!o_user) return response.status(404).json({err: "User does not exist!"}).end();
 		return response.json(o_user).status(200).end();
 	}
 }

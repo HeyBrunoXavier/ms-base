@@ -20,10 +20,8 @@ class PeopleController {
 		try{
 			let people = request.body;
 			people = await People.insert(people);
-			if(people.constraint == "people_cpf_unique")
-			return response.status(406).end("Duplicate CPF");
-			if(people.detail)
-			return response.status(400).end("Invalid Request");
+			if(people.constraint == "people_cpf_unique") return response.status(406).send("Duplicate CPF");
+			if(people.detail) return response.status(400).send("Invalid Request");
 			return response.json(people).status(200).end();
 		}
 		catch(error){

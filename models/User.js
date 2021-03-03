@@ -24,8 +24,8 @@ class User{
 	async insert(user){
 		try{
 			let o_user = await knex('users').insert(user)
-      return o_user = {
-        		"id": user.id,
+			return o_user = {
+				"id": user.id,
 				"name": user.name,
 				"email": user.email,
 				"people": user.people,
@@ -43,7 +43,7 @@ class User{
 	 */
 	async findByID(id){
 		try{
-			let o_user = await knex("users").where({id:id}).first();
+			let o_user = await knex("users").where({id}).first();
 			if(o_user){
 				delete o_user.password;
 				return o_user;
@@ -60,7 +60,7 @@ class User{
 	 */
 	async findByEmail(email){
 		try{
-			let o_user = await knex("users").where({email:email}).first();
+			let o_user = await knex("users").where({email}).first();
 			if(o_user){
 				return o_user;
 			}

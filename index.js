@@ -13,26 +13,16 @@ const table = new Table({
 				 , 'right': '║' , 'right-mid': '╢' , 'middle': '│' },
 	style: { 'padding-left': 2, 'padding-right': 2}
 });
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
-// parse application/json
-app.use(bodyParser.json())
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
 app.use(router);
 app.listen(PORT,() => {
-  table.push(
+	table.push(
 			["Service", `PORT: ${PORT}`,"Running"],
-      ["Methods", "Paths","ON"],
+			["Methods", "Paths","ON"],
 			[listEndpointsExpress(router)[0].method, listEndpointsExpress(router)[0].paths[0],true],
+			[listEndpointsExpress(router)[1].method, listEndpointsExpress(router)[1].paths[0],true],
 			[listEndpointsExpress(router)[2].method, listEndpointsExpress(router)[2].paths[0],true],
-      [listEndpointsExpress(router)[1].method, listEndpointsExpress(router)[1].paths[2],true],
-      [listEndpointsExpress(router)[0].method, listEndpointsExpress(router)[0].paths[1],true],
-      [listEndpointsExpress(router)[1].method, listEndpointsExpress(router)[0].paths[1],true],
-      [listEndpointsExpress(router)[0].method, listEndpointsExpress(router)[0].paths[3],true],
-      [listEndpointsExpress(router)[1].method, listEndpointsExpress(router)[1].paths[2],true],
-      [listEndpointsExpress(router)[0].method, listEndpointsExpress(router)[0].paths[4],true],
-      [listEndpointsExpress(router)[0].method, listEndpointsExpress(router)[0].paths[5],true],
-      [listEndpointsExpress(router)[0].method, listEndpointsExpress(router)[0].paths[2],true],
-      [listEndpointsExpress(router)[1].method, listEndpointsExpress(router)[1].paths[1],true],
 		);
 	console.log(table.toString());
 });

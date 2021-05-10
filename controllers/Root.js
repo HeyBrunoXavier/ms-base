@@ -7,7 +7,7 @@ class Root {
    */
 	async all(request,response){
 		let o_apresentation = {
-			"application": process.env.MS_BASE,
+			"application": process.env.MS_DOC,
 			"type": process.env.TYPE,
 			"version": process.env.VERSION,
 			"author": process.env.AUTHOR

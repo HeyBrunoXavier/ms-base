@@ -1,8 +1,6 @@
-const User = require('../models/User');
 const Auth = require('../models/Auth');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { use } = require('../routes/routes');
 class authentication {
   /**
    * @method Auth

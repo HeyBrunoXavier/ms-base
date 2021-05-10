@@ -19,6 +19,10 @@ class PeopleController {
   	*/
  	async insert(request,response){
 		try{
+			if(!request.body.name) return response.status(406).end("name field is empty");
+			if(!request.body.phone) return response.status(406).end("phone field is empty");
+			if(!request.body.email) return response.status(406).end("email field is empty");
+			if(!request.body.type) return response.status(406).end("type field is empty");
 			let people = await People.insert(request.body);
 			if(people.constraint == "people_email_unique") return response.status(406).end("ERR_DUPLICATE_EMAIL");
 			return response.json(people).status(200).end();
@@ -39,8 +43,8 @@ class PeopleController {
 		try{
 			console.log(request.params.id);
 			if(request.params.id){
-				let find_people = await People.list();
-				for(let st_people of find_people){
+				let list_people = await People.list();
+				for(let st_people of list_people){
 					if(request.params.id == st_people.id){
 						let people = await People.view(request.params.id);
 						return response.json(people).status(200).end();
@@ -71,6 +75,10 @@ class PeopleController {
 			let email = request.body.email;
 			let type = request.body.type;
 
+			if(!name) return response.status(406).end("name field is empty");
+			if(!phone) return response.status(406).end("phone field is empty");
+			if(!email) return response.status(406).end("email field is empty");
+			if(!type) return response.status(406).end("type field is empty");
 			if(id){
 				let people = await People.updated(id,name,phone,email,type);
 				if(people.constraint == "people_email_unique") return response.status(406).end("ERR_DUPLICATE_EMAIL");

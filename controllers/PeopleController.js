@@ -1,4 +1,5 @@
 const People = require("../models/People");
+const PHONE = require("../utils/Parser");
 class PeopleController {
 	/**
    	* @method list
@@ -19,12 +20,23 @@ class PeopleController {
   	*/
  	async insert(request,response){
 		try{
-			if(!request.body.name) return response.status(406).end("name field is empty");
-			if(!request.body.phone) return response.status(406).end("phone field is empty");
-			if(!request.body.email) return response.status(406).end("email field is empty");
-			if(!request.body.type) return response.status(406).end("type field is empty");
-			let people = await People.insert(request.body);
-			if(people.constraint == "people_email_unique") return response.status(406).end("ERR_DUPLICATE_EMAIL");
+			let o_response = {
+				"name": request.body.name,
+				"phone": PHONE.mtel(request.body.phone),
+				"email": request.body.email,
+				"type": request.body.type
+			}
+			if(!request.body.name) 
+				return response.status(406).end("name field is empty");
+			if(!request.body.phone) 
+				return response.status(406).end("phone field is empty");
+			if(!request.body.email) 
+				return response.status(406).end("email field is empty");
+			if(!request.body.type) 
+				return response.status(406).end("type field is empty");
+			let people = await People.insert(o_response);
+			if(people.constraint == "people_email_unique") 
+				return response.status(406).end("ERR_DUPLICATE_EMAIL");
 			return response.json(people).status(200).end();
 		}
 		catch(error){
@@ -69,19 +81,28 @@ class PeopleController {
   	*/
 	  async update(request,response){
 		try{
-			let id = request.params.id;
-			let name = request.body.name;
-			let phone = request.body.phone;
-			let email = request.body.email;
-			let type = request.body.type;
+			let st_id = request.params.id;
+			let st_name = request.body.name;
+			let st_phone = PHONE.mtel(request.body.phone);
+			let st_email = request.body.email;
+			let st_type = request.body.type;
+			let st_hash = request.headers['transaction-hash'];
 
-			if(!name) return response.status(406).end("name field is empty");
-			if(!phone) return response.status(406).end("phone field is empty");
-			if(!email) return response.status(406).end("email field is empty");
-			if(!type) return response.status(406).end("type field is empty");
-			if(id){
-				let people = await People.updated(id,name,phone,email,type);
-				if(people.constraint == "people_email_unique") return response.status(406).end("ERR_DUPLICATE_EMAIL");
+			if(!st_name) 
+				return response.status(406).end("Name field is empty");
+			if(!st_phone) 
+				return response.status(406).end("Phone field is empty");
+			if(!st_email) 
+				return response.status(406).end("Email field is empty");
+			if(!st_type) 
+				return response.status(406).end("Type field is empty");
+			if(!st_hash) 
+				return response.status(406).end("Hash field is empty");
+
+			if(st_id){
+				let people = await People.updated(st_id,st_name,st_phone,st_email,st_type,st_hash);
+				if(people.constraint == "people_email_unique") 
+					return response.status(406).end("ERR_DUPLICATE_EMAIL");
 				return response.json(people).status(200).end();
 			}
 			else{

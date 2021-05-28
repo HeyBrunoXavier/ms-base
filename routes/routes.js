@@ -6,6 +6,7 @@ const AuthMiddleware = require('../Middleware/Auth');
 const AuthenticationController = require("../controllers/AuthenticationController");
 const DoctorController = require("../controllers/DoctorController");
 const PeopleController = require("../controllers/PeopleController");
+const PhysicalPeopleController = require("../controllers/PhysicalPeopleController");
 const Root = require("../controllers/Root");
 
 router.get('/', Root.all);
@@ -24,6 +25,17 @@ router.post('/v1/people/',PeopleController.insert);
 router.get('/v1/people/:id',PeopleController.view);
 router.put('/v1/people/:id',PeopleController.update);
 router.delete('/v1/people/:id',PeopleController.delete);
+
+
+/**
+ * People Physical
+ */
+ router.get('/v1/physical/people/',PhysicalPeopleController.list);
+ router.post('/v1/physical/people/',PhysicalPeopleController.insert);
+ /*router.post('/v1/people/',PeopleController.insert);
+ router.get('/v1/people/:id',PeopleController.view);
+ router.put('/v1/people/:id',PeopleController.update);
+ router.delete('/v1/people/:id',PeopleController.delete);*/
 
 
 module.exports = router;

@@ -36,6 +36,15 @@ class Parser {
 			return false;
 		return o_cpf[0];
 	}
+
+	ParserCEP(st_cep){
+		st_cep = st_cep.replace(/\D/g,"")
+		st_cep = st_cep.replace(/^(\d{2})(\d)/,"$1.$2")
+		st_cep = st_cep.replace(/\.(\d{3})(\d)/,"$1-$2")
+		if(st_cep)
+			return st_cep;
+		return false;
+	}
 	
 }
 

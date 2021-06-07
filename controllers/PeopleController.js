@@ -51,7 +51,7 @@ class PeopleController {
    	* @param {*} request
    	* @param {*} response
   	*/
-	  async view(request,response){
+	async view(request,response){
 		try{
 			console.log(request.params.id);
 			if(request.params.id){

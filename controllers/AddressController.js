@@ -1,6 +1,6 @@
 const ADDRESS = require("../models/Address");
 const AXIOS = require("axios");
-const CEP = require("../utils/Parser");
+const PARSER = require("../utils/Parser");
 class AddressController {
 	/**
 	 * @method list
@@ -23,7 +23,7 @@ class AddressController {
 			console.log("REQUEST: ",request);			
 			let o_address = {
 				"id_person": request.body.person,
-				"zip_code": CEP.ParserCEP(request.body['zip_code']),
+				"zip_code": PARSER.ParserCEP(request.body['zip_code']),
 				"complement": request.body.complement,
 				"number": request.body.number,
 				"city": request.body.city,
@@ -97,7 +97,7 @@ class AddressController {
 		}
 		catch(error){
 			console.error(error)
-			return response.status(400).end();
+			return response.status(404).end();
 		}
 	}
 	/**
@@ -142,6 +142,29 @@ class AddressController {
 				return response.status(406).end("ERR_PERSON_NOT_FOUND");
 			
 			return response.json(o_response).status(200).end();
+		}
+		catch(error){
+			console.error(error)
+			return response.status(400).end();
+		}
+	}
+
+	/**
+  	* @method delete
+   	* @description Exclusão de um endereço
+   	* @param {*} request
+   	* @param {*} response
+  	*/
+	  async delete(request,response){
+		try{
+			let st_id = request.params.id;
+			if(st_id){
+				let o_response = await ADDRESS.delete(st_id);
+				return response.json(o_response).status(200).end();
+			}
+			else{
+				return response.status(400).end();
+			}
 		}
 		catch(error){
 			console.error(error)

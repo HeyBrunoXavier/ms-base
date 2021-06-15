@@ -5,13 +5,14 @@ class Address {
   /**
    * @method list
    * @author HeyBrunoXavier
-   * @description Listagem de endereço pessoas
+   * @description Listagem de endereço
    */
   async list(){
 		try {
 			var o_response = await knex.select("*").from("address");
 			if(o_response.length > 0){
-				delete o_response[0].password;
+				delete o_response[0].hash;
+				delete o_response[0].created_at;
 				return o_response;
 			}
 		}catch (erro) {
@@ -23,7 +24,7 @@ class Address {
    * @method insert
    * @param {*} address
    * @author HeyBrunoXavier
-   * @description Inserção de pessoas fisicas
+   * @description Inserção de endereço
    */
   	async insert(address){
 		try{
@@ -66,7 +67,7 @@ class Address {
    	* @method updated
    	* @param {*} people
    	* @author HeyBrunoXavier
-   	* @description Inserção de pessoas fisicas
+   	* @description Atualização de endereço
    	*/
 	async update(id,id_person,zip_code,complement,number,city,uf,country,hash){
 		try{
@@ -83,20 +84,12 @@ class Address {
    	* @method delete
    	* @param {*} people
    	* @author HeyBrunoXavier
-   	* @description Inserção de pessoas fisicas
+   	* @description Exclusão de endereço
    	*/
 	   async delete(id){
 		try{
-			let st_people = await knex('people').where({id: id}).del().returning("*");
-			let o_people = {
-				"id": st_people[0].id,
-				"name": st_people[0].name,
-				"phone": st_people[0].phone,
-				"email": st_people[0].email,
-				"type": st_people[0].type,
-				"hash": st_people[0].hash
-			}
-			return o_people;
+			let st_people = await knex('address').where({id: id}).del().returning("*");
+			return st_people;
 		}catch(error){
 			console.error(error);
 			return error

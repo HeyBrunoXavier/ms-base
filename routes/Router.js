@@ -1,5 +1,4 @@
-const express = require("express");
-const router = express.Router();
+const router = require("express").Router();
 const AuthMiddleware = require('../Middleware/Auth');
 //const auth = require("../utils/Passport")();
 
@@ -44,7 +43,7 @@ router.delete('/v1/people/:id',PeopleController.delete);
   router.post('/v1/address/',AddressController.insert);
   router.get('/v1/address/:id',AddressController.view);
   router.put('/v1/address/:id',AddressController.update);
-  /*router.delete('/v1/people/:id',PeopleController.delete);*/
+  router.delete('/v1/address/:id',AddressController.delete);
 
 
 module.exports = router;

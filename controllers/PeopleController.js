@@ -53,7 +53,6 @@ class PeopleController {
   	*/
 	async view(request,response){
 		try{
-			console.log(request.params.id);
 			if(request.params.id){
 				let list_people = await People.list();
 				for(let st_people of list_people){
